@@ -30,6 +30,49 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  // const s1cords = section1.getBoundingClientRect();
+  // console.log(s1cords);
+  //console.log(s1cords.top);  //Size from current windows to Learn more button
+  //console.log(window.pageYOffset); //Size from top of page to current windows (scorlloing and invisibible area of page)
+
+  // Calculating of transition from one section to another one
+  // window.scrollTo(
+  //   s1cords.left + window.pageXOffset,
+  //   s1cords.top + window.pageYOffset
+  // );
+
+  // window.scrollTo({
+  //   left: s1cords.left + window.pageXOffset,
+  //   top: s1cords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    e.preventDefault();
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+const h1 = document.querySelector('h1');
+console.log(h1.querySelectorAll('.higlight'));
+
 ////////////////////////////////////////
 ///////////////////////////////////////
 ////////////////////////////////////
@@ -123,3 +166,12 @@ document.addEventListener('keydown', function (e) {
 // logo.classList.remove('c', 'j');
 // logo.classList.toggle('c');
 // logo.classList.contains('c'); // not includes
+
+// //Setting random integer betweem numbers
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
+
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// console.log(randomColor(0, 255));

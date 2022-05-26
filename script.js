@@ -29,6 +29,7 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+//               25.05.2022
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 
@@ -72,6 +73,64 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 const h1 = document.querySelector('h1');
 console.log(h1.querySelectorAll('.higlight'));
+
+//                  26.05.2022
+
+//Tabbed companent
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  if (!clicked) return;
+  //Activating buttons
+  tabs.forEach(e => e.classList.remove('operations__tab--active'));
+  tabsContent.forEach(el => el.classList.remove('operations__content--active'));
+
+  clicked.classList.add('operations__tab--active');
+
+  //Activating Content
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
+//Passing arguments to eventhandlers.
+const handle = function (e, opacity) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = this;
+      }
+      logo.style.opacity = this;
+    });
+  }
+};
+
+const nav = document.querySelector('.nav');
+// nav.addEventListener('mouseover', e => {
+//   handle(e, 0.5);
+// });
+
+// nav.addEventListener('mouseout', e => {
+//   handle(e, 1);
+// });
+nav.addEventListener('mouseover', handle.bind(0.5));
+nav.addEventListener('mouseout', handle.bind(1));
+
+//Sticky navigation
+// 1.
+const initialCordinats = section1.getBoundingClientRect();
+window.addEventListener('scroll', () => {
+  if (window.scrollY > initialCordinats.top) {
+    nav.classList.add('sticky');
+  } else nav.classList.remove('sticky');
+});
 
 ////////////////////////////////////////
 ///////////////////////////////////////

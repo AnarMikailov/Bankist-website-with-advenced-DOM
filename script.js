@@ -31,6 +31,8 @@ document.addEventListener('keydown', function (e) {
 });
 //               25.05.2022
 
+//Learn more button
+
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 
 const section1 = document.querySelector('#section--1');
@@ -208,6 +210,92 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTarget.forEach(img => {
   imgObserver.observe(img);
 });
+
+//                 28.05.2022
+
+// Slider component.
+const slider = function () {
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const slides = document.querySelectorAll('.slide');
+  const slider = document.querySelector('.slider');
+  let curSLide = 0;
+  const maxSlide = slides.length;
+  const dotContainer = document.querySelector('.dots');
+  // slider.style.overflow = 'visible';
+  // slides.forEach((s, i) => {
+  //   s.style.transform = `translateX(${100 * i}%)`;
+  // });
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>
+`
+      );
+    });
+  };
+  createDots();
+  function goToSlide(slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    });
+  }
+  goToSlide(0);
+
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      const slide = e.target.dataset.slide;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+  const activateDot = function (slide) {
+    document.querySelectorAll('.dots__dot').forEach(dot => {
+      dot.classList.remove('dots__dot--active');
+    });
+    document
+      .querySelector(`.dots__dot[data-slide='${slide}']`)
+      .classList.add('dots__dot--active');
+  };
+  activateDot(0);
+  const nextSlide = function () {
+    if (curSLide === maxSlide - 1) {
+      curSLide = 0;
+    } else {
+      curSLide++;
+    }
+
+    goToSlide(curSLide);
+    activateDot(curSLide);
+  };
+
+  const previousSlide = function () {
+    if (curSLide === 0) {
+      curSLide = maxSlide - 1;
+    } else {
+      curSLide--;
+    }
+
+    goToSlide(curSLide);
+    activateDot(curSLide);
+  };
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', previousSlide);
+
+  // Slides with Arrowkeys
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') previousSlide();
+  });
+};
+
+slider();
+//Closing popup.
+// window.addEventListener('beforeunload', e => {
+//   e.returnValue = '';
+// });
 ////////////////////////////////////////
 ///////////////////////////////////////
 ////////////////////////////////////
